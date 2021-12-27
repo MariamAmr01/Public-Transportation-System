@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Client extends User implements Account {
@@ -71,7 +72,12 @@ public class Client extends User implements Account {
   // Ride begin 
   public void acceptOffer(int offerIndex){
     Driver d = this.ride.getOffers().get(offerIndex).getDriver();
+
+    IEvent event = new UserEvent(this, "User accepts the captain price", LocalDateTime.now());
+    ride.addEvent(event);
     
+    d.setAvailable(false);
+    d.setRide(ride);
     this.ride.setDriver(d);
   }
 

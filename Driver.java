@@ -1,15 +1,21 @@
 import java.util.ArrayList;
 
+import java.time.LocalDateTime;  
+import java.time.temporal.ChronoField;  
+
 public class Driver extends User implements Account {
   private String drivingLicense;
   private String nationalId;
   public double averageRate;
   // ================ New ====================
   private boolean available;
+  private Ride ride;
 
   private ArrayList<String> favoriteAreas;
+  //////////////////////////////////////
   private ArrayList<Ride> rides;
   private ArrayList<Ride> newRides;
+  ///////////////////////////////////
   public ArrayList<Integer> rate;
 
   public Driver() {
@@ -78,10 +84,25 @@ public class Driver extends User implements Account {
     // ride.setPrice(price);
     Offer offer = new Offer(price, this);
     ride.setOffer(offer);
+    // --> 
+    IEvent event = new CaptainArrivedEvent(ride, "Captain put a price to the ride" , LocalDateTime.now());
+    ride.addEvent(event);
+  }
+  
+  //========== New ==============
+  // Driver arrived to destination
+  public void endRide(){
+    available = true;
+    //Captain arrived to user destination 
+    IEvent event = new CaptainArrivedEvent(ride, "Captain arrived to user destination" ,  LocalDateTime.now());
+    ride.addEvent(event); 
   }
 
   public void notifyClient(Client client) {
     client.getNotification();
+  }
+  public void setRide(Ride r) {
+    ride = r;
   }
 
   public void setAvailable(boolean av) {
@@ -107,7 +128,9 @@ public class Driver extends User implements Account {
   public String setNationalId() {
     return nationalId;
   }
-
+  public Ride getRide(){
+    return ride;
+  }
   public ArrayList<String> getFavoriteAreas() {
     return favoriteAreas;
   }

@@ -9,6 +9,8 @@ public class Ride implements IRide {
   /// =============== New ================
   private ArrayList<Client> clients;
   private ArrayList<Offer> offers;
+  private ArrayList<IEvent> events;
+
 
   private Driver driver;
   private Boolean rated;
@@ -17,6 +19,7 @@ public class Ride implements IRide {
   public Ride(Client client, Driver driver, String source, String destination){
     clients = new ArrayList<>();
     offers = new ArrayList<>();
+    events = new ArrayList<>();
 
     //price = 0;
     clients.add(client);
@@ -24,6 +27,10 @@ public class Ride implements IRide {
     this.source = source;
     this.destination = destination;
     rated = false;
+  }
+//============= NEW =================
+  public void addEvent(IEvent e){
+    events.add(e);
   }
 
   ///////////////////////////////////////////////////////////////////////
