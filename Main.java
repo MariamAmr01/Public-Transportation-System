@@ -157,17 +157,17 @@ public class Main {
         int size;
         if(in.equals("1"))
         {
-          size = SystemApp.getObj().clientList.size();
+          size = SystemApp.getObj().getDataBase().getClients().size();
 
           if(size>0){
             for (int i = 0; i < size; i++) {
-              System.out.println((i+1)+") "+SystemApp.getObj().clientList.get(i));
+              System.out.println((i+1)+") "+SystemApp.getObj().getDataBase().getClients().get(i));
             }
             System.out.println("Choose number of account you want to suspend");
             System.out.print("Enter Number: ");
             int choice= input.nextInt();
             if(choice<=size&&choice>0) {
-              a.suspendAccount(SystemApp.getObj().clientList.get(choice - 1));
+              a.suspendAccount(SystemApp.getObj().getDataBase().getClients().get(choice - 1));
             }
             else System.out.println("Wrong input");
           }
@@ -175,16 +175,16 @@ public class Main {
         }
         else if(in.equals("2"))
         {
-          size = SystemApp.getObj().driverList.size();
+          size = SystemApp.getObj().getDataBase().getDrivers().size();
           if(size>0){
             for (int i = 0; i < size; i++) {
-              System.out.println((i+1)+") "+SystemApp.getObj().driverList.get(i));
+              System.out.println((i+1)+") "+SystemApp.getObj().getDataBase().getDrivers().get(i));
             }
             System.out.println("Choose number of account you want to suspend");
             System.out.print("Enter Number: ");
             int choice= input.nextInt();
             if(choice<=size&&choice>0) {
-              a.suspendAccount(SystemApp.getObj().driverList.get(choice - 1));
+              a.suspendAccount(SystemApp.getObj().getDataBase().getDrivers().get(choice - 1));
             }
             else System.out.println("Wrong input");
           }

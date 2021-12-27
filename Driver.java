@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 import java.time.LocalDateTime;  
-import java.time.temporal.ChronoField;  
 
 public class Driver extends User implements Account {
   private String drivingLicense;
@@ -34,21 +33,21 @@ public class Driver extends User implements Account {
     this.drivingLicense = info.get(3);
     this.nationalId = info.get(4);
 
-    for (int i = 0; i < SystemApp.getObj().driverList.size(); i++) {
-      if (SystemApp.getObj().driverList.get(i).getUserName().equals(this.userName)) {
+    for (int i = 0; i < SystemApp.getObj().getDataBase().getDrivers().size(); i++) {
+      if (SystemApp.getObj().getDataBase().getDrivers().get(i).getUserName().equals(this.userName)) {
         System.out.println("This userName is already exits. Registration failed.");
         return false;
       }
     }
     System.out.println("Registration succeeded.");
-    SystemApp.getObj().admin.pendingDriverList.add(this);
+    SystemApp.getObj().getDataBase().getAdmin().pendingDriverList.add(this);
     return true;
   }
 
   public User logIn(String name, String pass) {
     Driver d;
-    for (int i = 0; i < SystemApp.getObj().driverList.size(); i++) {
-      d = SystemApp.getObj().driverList.get(i);
+    for (int i = 0; i < SystemApp.getObj().getDataBase().getDrivers().size(); i++) {
+      d = SystemApp.getObj().getDataBase().getDrivers().get(i);
       if (d.getUserName().equals(name) && d.getPassword().equals(pass)) {
         return d;
       }
@@ -88,13 +87,19 @@ public class Driver extends User implements Account {
     IEvent event = new CaptainArrivedEvent(ride, "Captain put a price to the ride" , LocalDateTime.now());
     ride.addEvent(event);
   }
-  
+
   //========== New ==============
   // Driver arrived to destination
   public void endRide(){
     available = true;
     //Captain arrived to user destination 
     IEvent event = new CaptainArrivedEvent(ride, "Captain arrived to user destination" ,  LocalDateTime.now());
+    ride.addEvent(event); 
+  }
+// ============ New =====================
+  public void arrive(LocalDateTime time){
+    time = time.plusMinutes(10);
+    IEvent event = new CaptainArrivedEvent(ride, "Captain arrived to user location" ,  time);
     ride.addEvent(event); 
   }
 

@@ -14,9 +14,9 @@ public class Admin extends User{
     pendingDriverList = new ArrayList<Driver>();
   }
   public User logIn(String name, String pass){
-    if(SystemApp.getObj().admin.userName.equals(name)&&SystemApp.getObj().admin.password.equals(pass))
+    if(SystemApp.getObj().getDataBase().getAdmin().userName.equals(name)&&SystemApp.getObj().getDataBase().getAdmin().password.equals(pass))
     {
-      return SystemApp.getObj().admin;
+      return SystemApp.getObj().getDataBase().getAdmin();
     }
     return null;
   }
@@ -24,7 +24,7 @@ public class Admin extends User{
   public void approveDriver(Driver driver){
     System.out.println("APPROVED");
     pendingDriverList.remove(driver);
-    SystemApp.getObj().driverList.add(driver);
+    SystemApp.getObj().getDataBase().addUser(driver);
   }
 
   public void listPendingDrivers(){

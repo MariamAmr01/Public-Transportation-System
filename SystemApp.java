@@ -1,18 +1,18 @@
 import java.util.ArrayList;
 
 public class SystemApp {
-  public ArrayList<Client> clientList;
-  public ArrayList<Driver> driverList;
-  public Admin admin;
+  // public ArrayList<Client> clientList;
+  // public ArrayList<Driver> driverList;
+  // public Admin admin;
   private static SystemApp obj;
 
   private Database database;
 
   private SystemApp() {
     // Edit
-    clientList = new ArrayList<Client>();
-    driverList = new ArrayList<Driver>();
-    admin = new Admin("admin", "1234");
+    // clientList = new ArrayList<Client>();
+    // driverList = new ArrayList<Driver>();
+    // admin = new Admin("admin", "1234");
     // Lists 
     database = new Lists();
 
@@ -37,7 +37,7 @@ public class SystemApp {
   public ArrayList<Driver> findDriver(String source) {
     ArrayList<Driver> drivers = new ArrayList<>();
 
-    for (Driver driver : driverList) {
+    for (Driver driver : database.getDrivers()) {
       if (driver.getFavoriteAreas().contains(source)) {
         //return driver;
         drivers.add(driver);
@@ -51,16 +51,20 @@ public class SystemApp {
     driver.getNotification();
 
   }
-
+/////////////////////////////////////////////////////////////
   public void deleteUser(Account account) {
     if(account instanceof Client){
-      clientList.remove(account);
+      database.getClients().remove(account);
       System.out.println("The client account has been suspended");
     }
     if(account instanceof Driver){
-      driverList.remove(account);
+      database.getDrivers().remove(account);
       System.out.println("The driver account has been suspended");
     }
+    //database.removeUser(account);
   }
 
+  public Database getDataBase(){
+    return database;
+  }
 }
