@@ -5,19 +5,22 @@ public class Main {
   public static void clientMenu(Client c, Scanner input){
     System.out.println("Logged in as Client: ");
     System.out.println(c.getNotification());
-    if(!c.getNotification().equals("There is no offer for a ride yet\n") && !c.getRide().getRated())
+    if(!c.getNotification().equals("no offers")) //&& !c.getRide().getRated()
     {
-      System.out.println("Do you want to rate the driver ☺ \n1- Rate. \n2- Remind me later.");
-      int response = input.nextInt();
-      if (response == 1) {
-        System.out.println("Choose a rate: \n1 ★ \n2 ★★ \n3 ★★★ \n4 ★★★★ \n5 ★★★★★");
-        int rate = input.nextInt();
-        if(rate>=1&&rate<=5){
-          c.rateDriver(rate);
-        }
-        else System.out.println("invalid input");
-      }
-      else System.out.println("OK, thank you..");
+        System.out.println("Choose offer: ");
+        int response = input.nextInt();
+        c.acceptOffer(response);
+//      System.out.println("Do you want to rate the driver ☺ \n1- Rate. \n2- Remind me later.");
+//      int response = input.nextInt();
+//      if (response == 1) {
+//        System.out.println("Choose a rate: \n1 ★ \n2 ★★ \n3 ★★★ \n4 ★★★★ \n5 ★★★★★");
+//        int rate = input.nextInt();
+//        if(rate>=1&&rate<=5){
+//          c.rateDriver(rate);
+//        }
+//        else System.out.println("invalid input");
+//      }
+//      else System.out.println("OK, thank you..");
     }
 
     String in;
@@ -57,7 +60,9 @@ public class Main {
   public static void driverMenu(Driver d, Scanner input){
     System.out.println("Logged in as Driver: ");
     System.out.println(d.getNotification());
-    ArrayList<Ride> newRides = d.getNewRides();
+    System.out.println("Requested rides: "+d.listRides());
+
+    ArrayList<Ride> newRides = d.listRides();
 
     String in;
     do{
@@ -104,7 +109,7 @@ public class Main {
                 System.out.print("Enter price: ");
                 int price = input.nextInt();
                 d.offerRidePrice(newRides.get(number - 1), price);
-                d.getNewRides().remove(number - 1);
+                //d.getNewRides().remove(number - 1);
               }
               else System.out.println("Invalid input");
             } else if (!y.equals("n")) {
@@ -230,8 +235,14 @@ public class Main {
             info.add(infoString);
 
 
+
             switch (choice2) {
               case "1": {
+
+                System.out.print("Enter your birthday with format dd/MM/yyyy: ");
+                infoString = input.next();
+                info.add(infoString);
+
                 account = new Client();
                 if (account.register(info)) {
                   //Client Menu (client, scan)

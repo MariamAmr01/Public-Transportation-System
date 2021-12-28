@@ -3,23 +3,22 @@ import java.util.ArrayList;
 public class Ride implements IRide {
   private String source;
   private String destination;
-  private int price;
   //////
   //private Client client;
   /// =============== New ================
-  private ArrayList<Client> clients;
-  private ArrayList<Offer> offers;
-  private ArrayList<IEvent> events;
-
+  private ArrayList<Client> clients= new ArrayList<>();
+  private ArrayList<Offer> offers=new ArrayList<>();
+  private ArrayList<IEvent> events= new ArrayList<>();
+  private boolean completed;
 
   private Driver driver;
   private Boolean rated;
 
 
   public Ride(Client client, Driver driver, String source, String destination){
-    clients = new ArrayList<>();
-    offers = new ArrayList<>();
-    events = new ArrayList<>();
+    //clients = new ArrayList<>();
+    //offers = new ArrayList<>();
+    //events = new ArrayList<>();
 
     //price = 0;
     clients.add(client);
@@ -27,6 +26,7 @@ public class Ride implements IRide {
     this.source = source;
     this.destination = destination;
     rated = false;
+    completed=false;
   }
 //============= NEW =================
   public void addEvent(IEvent e){
@@ -40,9 +40,7 @@ public class Ride implements IRide {
   //   //driver.notifyClient(client);
   // }
 ////////////////////////////////////////////////////////////////////////////
-  public int getPrice(){
-    return price;
-  }
+
 
   public Driver getDriver(){
     return this.driver;
@@ -62,19 +60,32 @@ public class Ride implements IRide {
     return rated;
   }
 
+  public String getSource() {
+    return source;
+  }
+
   public ArrayList<Offer> getOffers(){
     return offers;
   }
   @Override
   public String toString(){
 
-    return "Source: " + source + "\nDestination: " + destination + "\nPrice: " + price +"\n"+driver+clients;
+    return "Source: " + source + "\nDestination: " + destination +"\n"+driver+clients;
   }
 
-  public void setOffer(Offer offer){
+  public void setCompleted(boolean completed) {
+    this.completed = completed;
+  }
+
+  public boolean getCompleted()
+  {
+    return completed;
+  }
+
+  public void setOffer(Offer offer,Driver driver){
     offers.add(offer);
     for (Client client : clients) {
-      driver.notifyClient(client);
+      driver.notifyClient(client,this);
     }
   }
 }

@@ -48,20 +48,13 @@ public class SystemApp {
   }
 
   public void notifyDriver(Driver driver) {
+    /////////---------->
     driver.getNotification();
 
   }
 /////////////////////////////////////////////////////////////
   public void deleteUser(Account account) {
-    if(account instanceof Client){
-      database.getClients().remove(account);
-      System.out.println("The client account has been suspended");
-    }
-    if(account instanceof Driver){
-      database.getDrivers().remove(account);
-      System.out.println("The driver account has been suspended");
-    }
-    //database.removeUser(account);
+    database.removeUser(account);
   }
 
   public Database getDataBase(){

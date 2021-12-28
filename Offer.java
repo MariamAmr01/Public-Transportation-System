@@ -23,4 +23,8 @@ public class Offer {
     return price;
   }
 
+  @Override
+  public String toString() {
+    return "Offer{" + "price=" + price + ", driver=" + driver + '}'+"\n";
+  }
 }

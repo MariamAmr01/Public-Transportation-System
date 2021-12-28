@@ -1,16 +1,16 @@
 import java.util.ArrayList;
 
 public class Lists implements Database {
-  private ArrayList<Client> clientList;
-  private ArrayList<Driver> driverList;
-  private ArrayList<Ride> ridesList;
+  private final ArrayList<Client> clientList=new ArrayList<>();
+  private final ArrayList<Driver> driverList=new ArrayList<>();
+  private final ArrayList<Ride> ridesList=new ArrayList<>();
 
   //========== New ============
   public Admin admin;
 
   public Lists(){
-    clientList = new ArrayList<Client>();
-    driverList = new ArrayList<Driver>();
+    //clientList = new ArrayList<Client>();
+    //driverList = new ArrayList<Driver>();
     admin = new Admin("admin", "1234");
   }
 

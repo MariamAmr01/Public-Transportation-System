@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-import java.time.LocalDateTime;  
+import java.time.LocalDateTime;
 
 public class Driver extends User implements Account {
   private String drivingLicense;
@@ -12,16 +12,16 @@ public class Driver extends User implements Account {
 
   private ArrayList<String> favoriteAreas;
   //////////////////////////////////////
-  private ArrayList<Ride> rides;
-  private ArrayList<Ride> newRides;
+ // private ArrayList<Ride> rides;
+//  private ArrayList<Ride> newRides;
   ///////////////////////////////////
   public ArrayList<Integer> rate;
 
   public Driver() {
     available = true;
     favoriteAreas = new ArrayList<String>();
-    rides = new ArrayList<Ride>();
-    newRides = new ArrayList<Ride>();
+    //rides = new ArrayList<Ride>();
+    //newRides = new ArrayList<Ride>();
     rate = new ArrayList<Integer>();
   }
 
@@ -68,22 +68,26 @@ public class Driver extends User implements Account {
   }
 
   public ArrayList<Ride> listRides() {
-    if (rides.size() > 0) {
-      System.out.println("All Rides: ");
-      for (int i = 0; i < rides.size(); i++) {
-        System.out.println(i + 1 + ") " + rides.get(i));
+    ArrayList<Ride> rides= SystemApp.getObj().getDataBase().getRides();
+    ArrayList<Ride> foundRide= new ArrayList<>();
+    for (Ride r : rides) {
+      if (r.getDriver() == null&& !r.getCompleted()) {
+        System.out.println("==========");
+        for (String favoriteArea : favoriteAreas) {
+          if (favoriteArea.equals(r.getSource())) {
+            foundRide.add(r);
+          }
+        }
       }
-      System.out.println("============================");
-    } else
-      System.out.println("You have no rides");
-    return rides;
+    }
+    return foundRide;
   }
 
   public void offerRidePrice(Ride ride, int price) {
     // ride.setPrice(price);
     Offer offer = new Offer(price, this);
-    ride.setOffer(offer);
-    // --> 
+    ride.setOffer(offer,this);
+    // --> a
     IEvent event = new CaptainArrivedEvent(ride, "Captain put a price to the ride" , LocalDateTime.now());
     ride.addEvent(event);
   }
@@ -94,7 +98,8 @@ public class Driver extends User implements Account {
     available = true;
     //Captain arrived to user destination 
     IEvent event = new CaptainArrivedEvent(ride, "Captain arrived to user destination" ,  LocalDateTime.now());
-    ride.addEvent(event); 
+    ride.addEvent(event);
+    ride.setCompleted(true);
   }
 // ============ New =====================
   public void arrive(LocalDateTime time){
@@ -103,7 +108,8 @@ public class Driver extends User implements Account {
     ride.addEvent(event); 
   }
 
-  public void notifyClient(Client client) {
+  public void notifyClient(Client client,Ride ride) {
+    /////////---------->
     client.getNotification();
   }
   public void setRide(Ride r) {
@@ -139,23 +145,24 @@ public class Driver extends User implements Account {
   public ArrayList<String> getFavoriteAreas() {
     return favoriteAreas;
   }
+//
+//  public ArrayList<Ride> getRides() {
+//    return rides;
+//  }
 
-  public ArrayList<Ride> getRides() {
-    return rides;
-  }
-
-  public ArrayList<Ride> getNewRides() {
-    return newRides;
-  }
+//  public ArrayList<Ride> getNewRides() {
+//    return newRides;
+//  }
 
   public String getNotification() {
 
     String ride = "new rides has been added\n";
-    if (newRides.size() > 0) {
+    ArrayList<Ride> requestedRide = listRides();
+    if(requestedRide!=null)
+    {
+      for (Ride rRide : requestedRide) {
 
-      for (int i = 0; i < newRides.size(); i++) {
-
-        ride += newRides.get(i) + "========================\n";
+        ride += rRide + "========================\n";
       }
 
       return ride + "Please offer price to these rides.\n";
