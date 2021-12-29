@@ -76,29 +76,27 @@ public class Client extends User implements Account {
       for (Driver driver : drivers) {
         if(driver.getAvailable()){
           SystemApp.getObj().notifyDriver(driver);
-        }
-        
+        }        
       }
       // edit
       //System.out.println(drivers);
-
-
      }
 
   }
 /// ================== New ============================
   // Ride begin 
   public void acceptOffer(int offerIndex){
-    Driver d = this.ride.getOffers().get(offerIndex).getDriver();
+
+    Driver d = this.ride.getOffers().get(offerIndex-1).getDriver();
     LocalDateTime time =  LocalDateTime.now();
     IEvent event = new UserEvent(this, "User accepts the captain price", time);
     ride.addEvent(event);
-/////////////////////////////////////
-    d.arrive(time);
-
+    
     d.setAvailable(false);
-    d.setRide(ride);
+    d.setRide(this.ride);
     this.ride.setDriver(d);
+
+    d.arrive(time);
   }
 
   public String getNotification(){

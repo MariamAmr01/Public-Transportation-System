@@ -1,21 +1,12 @@
 import java.util.ArrayList;
 
 public class SystemApp {
-  // public ArrayList<Client> clientList;
-  // public ArrayList<Driver> driverList;
-  // public Admin admin;
   private static SystemApp obj;
 
   private Database database;
 
   private SystemApp() {
-    // Edit
-    // clientList = new ArrayList<Client>();
-    // driverList = new ArrayList<Driver>();
-    // admin = new Admin("admin", "1234");
-    // Lists 
     database = new Lists();
-
   }
 
   public static SystemApp getObj() {
@@ -48,11 +39,10 @@ public class SystemApp {
   }
 
   public void notifyDriver(Driver driver) {
-    /////////---------->
     driver.getNotification();
 
   }
-/////////////////////////////////////////////////////////////
+
   public void deleteUser(Account account) {
     database.removeUser(account);
   }

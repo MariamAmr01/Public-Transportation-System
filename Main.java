@@ -60,12 +60,14 @@ public class Main {
   public static void driverMenu(Driver d, Scanner input){
     System.out.println("Logged in as Driver: ");
     System.out.println(d.getNotification());
-    System.out.println("Requested rides: "+d.listRides());
+    //System.out.println("Requested rides: "+d.listRides());
 
-    ArrayList<Ride> newRides = d.listRides();
+    //ArrayList<Ride> newRides = d.listRides();
 
     String in;
     do{
+      ArrayList<Ride> newRides = d.listRides();
+
       System.out.println("Choose one of the following: ");
       System.out.println("1- Add favorite Areas\n2- List Ratings\n3- List Rides\n4- Offer ride price\n5-Logout");
       in = input.next();
