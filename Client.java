@@ -9,6 +9,8 @@ public class Client extends User implements Account {
   private Ride ride;
   //============= New ==========
   private Date birthday;
+  private int requiredSeats;
+  private int accAdditionalPass;
 
   public User logIn(String name, String pass){
     Client c;
@@ -61,8 +63,11 @@ public class Client extends User implements Account {
     boolean createRide = true;
 
     ArrayList<Driver> drivers = new ArrayList<Driver>();
-    ///---> edit (findDriver)
-    drivers=SystemApp.getObj().findDriver(source);
+
+    this.accAdditionalPass=accAdditionalPass;
+    requiredSeats=passengers+accAdditionalPass;
+    drivers=SystemApp.getObj().findDriver(source,requiredSeats);
+
      if(drivers==null)
      {
        //edit
@@ -71,7 +76,7 @@ public class Client extends User implements Account {
      else
      {
        for (Driver driver : drivers) {
-         if(!driver.getRide().getCompleted() && driver.getRide().getSource().equals(source)){
+         if(driver.getRide()!=null&&!driver.getRide().getCompleted() && driver.getRide().getSource().equals(source)){
            createRide = false;
            this.ride = driver.getRide();
            this.ride.addClient(this);
@@ -82,19 +87,10 @@ public class Client extends User implements Account {
         this.ride=r;
         SystemApp.getObj().getDataBase().addRide(this.ride);
        }
-      //  d.getRides().add(r);
-      //
+       for (Driver driver : drivers) {
+         SystemApp.getObj().notifyDriver(driver);
+       }
 
-      // SystemApp.getObj().getDataBase().addRide(this.ride);
-
-      // notify and wait the offers from drivers (if the driver is available)
-      for (Driver driver : drivers) {
-        if(driver.getAvailable()){
-          SystemApp.getObj().notifyDriver(driver);
-        }        
-      }
-      // edit
-      //System.out.println(drivers);
      }
 
   }
@@ -108,15 +104,23 @@ public class Client extends User implements Account {
         offers.add(of);
       }
     }
-    // Driver d = this.ride.getOffers().get(offerIndex-1).getDriver();
     Driver d = offers.get(offerIndex-1).getDriver();
 
     LocalDateTime time =  LocalDateTime.now();
     IEvent event = new UserEvent(this, "User accepts the captain price", time);
     ride.addEvent(event);
-    ///////------>
-    d.setAvailable(false);
-    ///////////////////////////
+
+    if(accAdditionalPass==0)
+    {
+     System.out.println("/////////////////////////////");
+      d.setAvailableSeat(0);
+    }
+
+    else
+    {
+      int remainingSeat = d.getAvailableSeat() - requiredSeats;
+      d.setAvailableSeat(remainingSeat);
+    }
 
     d.setRide(this.ride);
     this.ride.setDriver(d);
@@ -125,9 +129,7 @@ public class Client extends User implements Account {
   }
 
   public String getNotification(){
-//    if(ride!= null && ride.getPrice()>0)
-//      return "There is an offer for a ride with price " + ride.getPrice() + " has been added\n"+ ride.toString();
-//    return "There is no offer for a ride yet\n";
+
    ArrayList<Offer> offers = new ArrayList<>();
 
    if(ride!= null ) {
@@ -140,13 +142,9 @@ public class Client extends User implements Account {
       }
       return offers.toString();
     }
-      //return this.ride.getOffers().toString();
+
   }
 
-    // if(ride!= null ) {
-    //   if (this.ride.getOffers() != null)
-    //     return this.ride.getOffers().toString();
-    // }
    return "no offers";
   }
   public Ride getRide(){

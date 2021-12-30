@@ -4,6 +4,8 @@ public class Lists implements Database {
   private final ArrayList<Client> clientList=new ArrayList<>();
   private final ArrayList<Driver> driverList=new ArrayList<>();
   private final ArrayList<Ride> ridesList=new ArrayList<>();
+  //=============New==============
+  private final ArrayList<Driver> pendingDriverList=new ArrayList<>();
 
   //========== New ============
   public Admin admin;
@@ -49,6 +51,10 @@ public class Lists implements Database {
   }
   public ArrayList<Ride> getRides(){
     return ridesList;
+  }
+
+  public ArrayList<Driver> getPendingDriverList() {
+    return pendingDriverList;
   }
 
   public Admin getAdmin(){

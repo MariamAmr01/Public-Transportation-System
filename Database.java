@@ -9,5 +9,7 @@ public interface Database {
   public ArrayList<Driver> getDrivers();
   public ArrayList<Client> getClients();
   public ArrayList<Ride> getRides();
+
+  public ArrayList<Driver> getPendingDriverList();
   public Admin getAdmin();
 }

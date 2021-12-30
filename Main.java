@@ -97,7 +97,8 @@ public class Main {
         break;
 
         case "3":
-        d.listRides();
+          d.listRides();
+        System.out.println(d.listRides());
         break;
         case "4":
             if (newRides.size() > 0) {
@@ -145,7 +146,7 @@ public class Main {
 
         a.listPendingDrivers();
         Driver pDriver;
-        if (a.pendingDriverList.size() > 0) {
+        if (SystemApp.getObj().getDataBase().getPendingDriverList().size() > 0) {
           do {
             System.out.println("Do you want to approve?\nEnter Y/n");
             in = input.next();
@@ -153,8 +154,8 @@ public class Main {
             if (in.equalsIgnoreCase("y")) {
               System.out.println("Enter number of driver: ");
               c = input.nextInt();
-              if(c<=a.pendingDriverList.size()&&c>0) {
-                pDriver = a.pendingDriverList.get((c - 1));
+              if(c<= SystemApp.getObj().getDataBase().getPendingDriverList().size()&&c>0) {
+                pDriver =   SystemApp.getObj().getDataBase().getPendingDriverList().get((c - 1));
                 a.approveDriver(pDriver);
               }
               else System.out.println("Wrong input");
@@ -265,6 +266,10 @@ public class Main {
                 info.add(infoString);
 
                 System.out.print("Enter your nationalId: ");
+                infoString = input.next();
+                info.add(infoString);
+
+                System.out.print("Enter your available number seats: ");
                 infoString = input.next();
                 info.add(infoString);
 

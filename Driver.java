@@ -10,24 +10,18 @@ public class Driver extends User implements Account {
   private boolean available;
   private Ride ride;
   private int numOfSeats;
-
+  private int availableSeat;
   private ArrayList<String> favoriteAreas;
-  //////////////////////////////////////
-  // private ArrayList<Ride> rides;
-  // private ArrayList<Ride> newRides;
-  ///////////////////////////////////
   public ArrayList<Integer> rate;
 
   public Driver() {
     available = true;
     favoriteAreas = new ArrayList<String>();
-    // rides = new ArrayList<Ride>();
-    // newRides = new ArrayList<Ride>();
+
     rate = new ArrayList<Integer>();
   }
 
   // 1) userName 2)password 3) moblie 4) drivingLicense 5) nationalId 6) numOfSeats
-  // numOfSeats
   public Boolean register(ArrayList<String> info) {
     this.userName = info.get(0);
     this.password = info.get(1);
@@ -35,6 +29,7 @@ public class Driver extends User implements Account {
     this.drivingLicense = info.get(3);
     this.nationalId = info.get(4);
     this.numOfSeats = Integer.parseInt(info.get(5));
+    availableSeat=numOfSeats;
 
     for (int i = 0; i < SystemApp.getObj().getDataBase().getDrivers().size(); i++) {
       if (SystemApp.getObj().getDataBase().getDrivers().get(i).getUserName().equals(this.userName)) {
@@ -42,8 +37,9 @@ public class Driver extends User implements Account {
         return false;
       }
     }
+
     System.out.println("Registration succeeded.");
-    SystemApp.getObj().getDataBase().getAdmin().pendingDriverList.add(this);
+    SystemApp.getObj().getDataBase().getPendingDriverList().add(this);
     return true;
   }
 
@@ -58,9 +54,7 @@ public class Driver extends User implements Account {
     return null;
   }
 
-  //////////////////////// -->
   public void addAreas(ArrayList<String> areas) {
-    // this.favoriteAreas = areas;
     this.favoriteAreas.addAll(areas);
   }
 
@@ -77,9 +71,10 @@ public class Driver extends User implements Account {
     ArrayList<Ride> foundRide = new ArrayList<>();
     for (Ride r : rides) {
       if (r.getDriver() == null && !r.getCompleted()) {
-        System.out.println("==========");
+//        System.out.println("==========");
         for (String favoriteArea : favoriteAreas) {
           if (favoriteArea.equals(r.getSource())) {
+//            System.out.println(favoriteArea);
             foundRide.add(r);
           }
         }
@@ -92,7 +87,6 @@ public class Driver extends User implements Account {
     // ride.setPrice(price);
     Offer offer = new Offer(price, this);
     ride.setOffer(offer, this);
-    // --> a
     IEvent event = new CaptianOfferEvent(ride, price, "Captain put a price to the ride", LocalDateTime.now());
     ride.addEvent(event);
   }
@@ -113,12 +107,12 @@ public class Driver extends User implements Account {
     IEvent event = new CaptainArrivedEvent(this.ride, "Captain arrived to user location", time);
     ride.addEvent(event);
   }
-////////////////------>
+
   public String getNotification() {
 
     String ride = "new rides has been added\n";
     ArrayList<Ride> requestedRide = listRides();
-    // if(requestedRide!=null)
+
     if (requestedRide.size() > 0) {
 
       for (Ride rRide : requestedRide) {
@@ -157,7 +151,18 @@ public class Driver extends User implements Account {
   }
 
   public boolean getAvailable() {
-    return available;
+
+    System.out.println("Available seats: "+availableSeat);
+    return availableSeat>0;
+
+  }
+
+  public void setAvailableSeat(int availableSeat) {
+    this.availableSeat = availableSeat;
+  }
+
+  public int getAvailableSeat() {
+    return availableSeat;
   }
 
   public String getDrivingLicense() {

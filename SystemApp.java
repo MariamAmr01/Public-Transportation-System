@@ -25,13 +25,12 @@ public class SystemApp {
   }
 
   /// ============= New ==================
-  //edit
-  public ArrayList<Driver> findDriver(String source) {
+  public ArrayList<Driver> findDriver(String source, int nRequired) {
+
     ArrayList<Driver> drivers = new ArrayList<>();
 
     for (Driver driver : database.getDrivers()) {
-      if (driver.getFavoriteAreas().contains(source)) {
-        //return driver;
+      if (driver.getFavoriteAreas().contains(source) && driver.getAvailableSeat()>=nRequired&&driver.getAvailable()) {
         drivers.add(driver);
       }
 
