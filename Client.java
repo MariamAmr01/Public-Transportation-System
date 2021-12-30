@@ -135,7 +135,7 @@ public class Client extends User implements Account {
    ArrayList<Offer> offers = new ArrayList<>();
 
    if(ride!= null ) {
-    if (this.ride.getOffers().size() != 0)
+    if (this.ride.getOffers().size() > 0)
     {
       for (Offer of : this.ride.getOffers()) {
         if (this.ride.getDriver() == null || this.ride.getDriver().getRide().getCompleted()){
