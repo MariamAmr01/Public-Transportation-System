@@ -76,12 +76,14 @@ public class Client extends User implements Account {
      else
      {
        for (Driver driver : drivers) {
-         if(driver.getRide()!=null&&!driver.getRide().getCompleted())
+         if(driver.getRide()!=null && !driver.getRide().getCompleted())
          {
-           if(driver.getRide().getSource().equals(source)&&accAdditionalPass!=0) {
+           if(driver.getRide().getSource().equals(source) && accAdditionalPass!=0) {
              createRide = false;
              this.ride = driver.getRide();
              this.ride.addClient(this);
+             //System.out.println("1)===============================================");
+             SystemApp.getObj().notifyDriver(driver);
            }
          }
        }
@@ -91,7 +93,12 @@ public class Client extends User implements Account {
         SystemApp.getObj().getDataBase().addRide(this.ride);
        }
        for (Driver driver : drivers) {
-         SystemApp.getObj().notifyDriver(driver);
+         if(createRide && driver.getRide().getCompleted()){
+          //System.out.println("D: " + driver + "\nR: " + driver.getRide() + "\nC: " + driver.getRide().getCompleted());
+          //System.out.println("2)===============================================");
+          SystemApp.getObj().notifyDriver(driver);
+         }
+         //SystemApp.getObj().notifyDriver(driver);
        }
 
      }
@@ -161,5 +168,9 @@ public class Client extends User implements Account {
 
   public Date getBirthday(){
     return birthday;
+  }
+
+  public int getAccAdditionalSeats(){
+    return accAdditionalPass;
   }
 }

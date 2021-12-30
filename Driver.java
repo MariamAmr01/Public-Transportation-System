@@ -70,7 +70,7 @@ public class Driver extends User implements Account {
     ArrayList<Ride> rides = SystemApp.getObj().getDataBase().getRides();
     ArrayList<Ride> foundRide = new ArrayList<>();
     for (Ride r : rides) {
-      if (r.getDriver() == null && !r.getCompleted()) {
+      if (r.getDriver() == null && !r.getCompleted() && r.getClients().get(0).getAccAdditionalSeats() != 0) {
 //        System.out.println("==========");
         for (String favoriteArea : favoriteAreas) {
           if (favoriteArea.equals(r.getSource())) {
