@@ -40,18 +40,24 @@ public class Main {
         String source = input.next();
         System.out.print("Enter destination : ");
         String destination = input.next();
-
-        c.requestRide(source, destination);
+        
+        System.out.print("Enter Number of passengers : ");
+        int numOfPassenger = input.nextInt();       
+        
+        System.out.print("Enter accAdditionalPass : ");
+        int accAdditionalPass = input.nextInt();
+////////////////////------------->
+        c.requestRide(source, destination, numOfPassenger, accAdditionalPass);
       }
       if(flag && in.equals("3") && !c.getRide().getRated())
       {
         System.out.println("Choose a rate: \n1 ★ \n2 ★★ \n3 ★★★ \n4 ★★★★ \n5 ★★★★★");
         int rate = input.nextInt();
-        if(rate>=1&&rate<=5)
-        {
-          c.rateDriver(rate);
-        }
-        else System.out.println("invalid input");
+        // if(rate>=1&&rate<=5)
+        // {
+          System.out.println(c.rateDriver(rate));
+        // }
+        //else System.out.println("invalid input");
       }
 
     } while(!in.equals("2"));

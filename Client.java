@@ -47,16 +47,21 @@ public class Client extends User implements Account {
   }
 
 
-  public void rateDriver(int rate){
-    this.ride.getDriver().rate.add(rate);
-    this.ride.setRated(true);
-    SystemApp.getObj().setAverageRate(this.ride.getDriver());
-
+  public String rateDriver(int rate){
+    if(rate >= 1 && rate <= 5){
+      this.ride.getDriver().rate.add(rate);
+      this.ride.setRated(true);
+      SystemApp.getObj().setAverageRate(this.ride.getDriver());
+      return "Done ☺\n";
+    }
+    return "invalid input";
   }
 
-  public void requestRide(String source, String destination){
+  public void requestRide(String source, String destination, int passengers, int accAdditionalPass){
+    boolean createRide = true;
 
     ArrayList<Driver> drivers = new ArrayList<Driver>();
+    ///---> edit (findDriver)
     drivers=SystemApp.getObj().findDriver(source);
      if(drivers==null)
      {
@@ -65,12 +70,22 @@ public class Client extends User implements Account {
      }
      else
      {
-       Ride r= new Ride(this, null, source, destination);
-       this.ride=r;
+       for (Driver driver : drivers) {
+         if(!driver.getRide().getCompleted() && driver.getRide().getSource().equals(source)){
+           createRide = false;
+           this.ride = driver.getRide();
+           this.ride.addClient(this);
+         }
+       }
+       if(createRide){
+        Ride r= new Ride(this, null, source, destination);
+        this.ride=r;
+        SystemApp.getObj().getDataBase().addRide(this.ride);
+       }
       //  d.getRides().add(r);
       //
 
-      SystemApp.getObj().getDataBase().addRide(r);
+      // SystemApp.getObj().getDataBase().addRide(this.ride);
 
       // notify and wait the offers from drivers (if the driver is available)
       for (Driver driver : drivers) {
@@ -86,7 +101,7 @@ public class Client extends User implements Account {
 /// ================== New ============================
   // Ride begin 
   public void acceptOffer(int offerIndex){
-
+    
     Driver d = this.ride.getOffers().get(offerIndex-1).getDriver();
     LocalDateTime time =  LocalDateTime.now();
     IEvent event = new UserEvent(this, "User accepts the captain price", time);

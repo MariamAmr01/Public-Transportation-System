@@ -26,7 +26,8 @@ public class Driver extends User implements Account {
     rate = new ArrayList<Integer>();
   }
 
-  // 1) userName 2)password 3) moblie 4) drivingLicense 5) nationalId 6) numOfSeats
+  // 1) userName 2)password 3) moblie 4) drivingLicense 5) nationalId 6)
+  // numOfSeats
   public Boolean register(ArrayList<String> info) {
     this.userName = info.get(0);
     this.password = info.get(1);
@@ -59,7 +60,7 @@ public class Driver extends User implements Account {
 
   //////////////////////// -->
   public void addAreas(ArrayList<String> areas) {
-    //this.favoriteAreas = areas;
+    // this.favoriteAreas = areas;
     this.favoriteAreas.addAll(areas);
   }
 
@@ -112,15 +113,21 @@ public class Driver extends User implements Account {
     IEvent event = new CaptainArrivedEvent(this.ride, "Captain arrived to user location", time);
     ride.addEvent(event);
   }
-
+////////////////------>
   public String getNotification() {
 
     String ride = "new rides has been added\n";
     ArrayList<Ride> requestedRide = listRides();
     // if(requestedRide!=null)
     if (requestedRide.size() > 0) {
-      for (Ride rRide : requestedRide) {
 
+      for (Ride rRide : requestedRide) {
+        for (int j = 0; j < rRide.getOffers().size(); j++) {
+          if (rRide.getOffers().get(j).getDriver().equals(this)) {
+            ride = rRide +"\n========================\nNew Client is added !!!!\n";
+            return ride;
+          }
+        }
         ride += rRide + "========================\n";
       }
 

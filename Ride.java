@@ -28,6 +28,10 @@ public class Ride implements IRide {
   public void addEvent(IEvent e) {
     events.add(e);
   }
+  // ============= NEW =================
+  public void addClient(Client c) {
+    clients.add(c);
+  }
 
   public void setOffer(Offer offer, Driver driver) {
     offers.add(offer);
@@ -64,18 +68,18 @@ public class Ride implements IRide {
     return offers;
   }
 
-  @Override
-  public String toString() {
-
-    return "Source: " + source + "\nDestination: " + destination + "\n" + driver + clients;
-  }
-
   public void setCompleted(boolean completed) {
     this.completed = completed;
   }
 
   public boolean getCompleted() {
     return completed;
+  }
+  
+  @Override
+  public String toString() {
+
+    return "Source: " + source + "\nDestination: " + destination + "\n" + driver + clients;
   }
 
 }
