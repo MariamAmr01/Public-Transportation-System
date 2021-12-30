@@ -76,10 +76,13 @@ public class Client extends User implements Account {
      else
      {
        for (Driver driver : drivers) {
-         if(driver.getRide()!=null&&!driver.getRide().getCompleted() && driver.getRide().getSource().equals(source)){
-           createRide = false;
-           this.ride = driver.getRide();
-           this.ride.addClient(this);
+         if(driver.getRide()!=null&&!driver.getRide().getCompleted())
+         {
+           if(driver.getRide().getSource().equals(source)&&accAdditionalPass!=0) {
+             createRide = false;
+             this.ride = driver.getRide();
+             this.ride.addClient(this);
+           }
          }
        }
        if(createRide){
@@ -112,7 +115,6 @@ public class Client extends User implements Account {
 
     if(accAdditionalPass==0)
     {
-     System.out.println("/////////////////////////////");
       d.setAvailableSeat(0);
     }
 
@@ -122,9 +124,9 @@ public class Client extends User implements Account {
       d.setAvailableSeat(remainingSeat);
     }
 
-    d.setRide(this.ride);
     this.ride.setDriver(d);
-
+    d.setRide(this.ride);
+    //d.getRide().setDriver(d);
     d.arriveToLocation(time);
   }
 

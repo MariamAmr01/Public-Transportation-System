@@ -30,8 +30,10 @@ public class SystemApp {
     ArrayList<Driver> drivers = new ArrayList<>();
 
     for (Driver driver : database.getDrivers()) {
+
       if (driver.getFavoriteAreas().contains(source) && driver.getAvailableSeat()>=nRequired&&driver.getAvailable()) {
         drivers.add(driver);
+        driver.getAvailable();
       }
 
     }
