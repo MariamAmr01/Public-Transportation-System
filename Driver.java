@@ -26,7 +26,7 @@ public class Driver extends User implements Account {
     rate = new ArrayList<Integer>();
   }
 
-  // 1) userName 2)password 3) moblie 4) drivingLicense 5) nationalId 6)
+  // 1) userName 2)password 3) moblie 4) drivingLicense 5) nationalId 6) numOfSeats
   // numOfSeats
   public Boolean register(ArrayList<String> info) {
     this.userName = info.get(0);
@@ -108,7 +108,7 @@ public class Driver extends User implements Account {
   }
 
   // ============ New =====================
-  public void arrive(LocalDateTime time) {
+  public void arriveToLocation(LocalDateTime time) {
     time = time.plusMinutes(10);
     IEvent event = new CaptainArrivedEvent(this.ride, "Captain arrived to user location", time);
     ride.addEvent(event);
