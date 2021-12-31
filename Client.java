@@ -1,3 +1,4 @@
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -103,7 +104,7 @@ public class Client extends User implements Account {
   }
 
   // Ride begin 
-  public void acceptOffer(int offerIndex){
+  public void acceptOffer(int offerIndex) {
     ArrayList<Offer> offers = new ArrayList<>();
  
     for (Offer of : this.ride.getOffers()) {
@@ -130,13 +131,33 @@ public class Client extends User implements Account {
     this.ride.setDriver(d);
     d.setRide(this.ride);
     d.arriveToLocation(time);
+
+    
+    //try {
+      //IDiscount plainPrice = new AdminAreaDiscount(new BirthdayDiscount(new TwoPassengersDiscount(new PublicHolidayDiscount(new FirstRideDiscount(new PlainPrice())))));
+      IDiscount plainPrice = new BirthdayDiscount(new PlainPrice());
+      double discountedPrice = plainPrice.applyDiscount(offers.get(offerIndex-1).getPrice(), this.ride);
+      System.out.println("Discounted Price " + discountedPrice);
+      System.out.println("plain price " + offers.get(offerIndex-1).getPrice());
+
+      if(discountedPrice != offers.get(offerIndex-1).getPrice())
+          System.out.println(displayDiscount(discountedPrice));
+    //} 
+    /*catch (ParseException e) {
+      e.printStackTrace();
+    }*/
   }
 
-  public String getNotification(){
+  public String displayDiscount(double discountedPrice)
+  {
+    return "price after discount: " + Double.toString(discountedPrice);
+  }
+  
+  public String getNotification() {
 
-   ArrayList<Offer> offers = new ArrayList<>();
+  ArrayList<Offer> offers = new ArrayList<>();
 
-   if(ride!= null ) {
+  if(ride!= null ) {
     if (this.ride.getOffers().size() > 0)
     {
       for (Offer of : this.ride.getOffers()) {
