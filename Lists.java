@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 
 public class Lists implements Database {
-  private final ArrayList<Client> clientList=new ArrayList<>();
-  private final ArrayList<Driver> driverList=new ArrayList<>();
-  private final ArrayList<Ride> ridesList=new ArrayList<>();
+  private final ArrayList<Client> clientList = new ArrayList<>();
+  private final ArrayList<Driver> driverList = new ArrayList<>();
+  private final ArrayList<Ride> ridesList = new ArrayList<>();
   //=============New==============
   private final ArrayList<Driver> pendingDriverList=new ArrayList<>();
+  private final ArrayList<String> areas = new ArrayList<>();
 
   //========== New ============
   public Admin admin;
@@ -46,10 +47,10 @@ public class Lists implements Database {
   public ArrayList<Driver> getDrivers(){
     return driverList;
   }
-  public ArrayList<Client> getClients(){
+  public ArrayList<Client> getClients() {
     return clientList;
   }
-  public ArrayList<Ride> getRides(){
+  public ArrayList<Ride> getRides() {
     return ridesList;
   }
 
@@ -57,7 +58,19 @@ public class Lists implements Database {
     return pendingDriverList;
   }
 
-  public Admin getAdmin(){
+  public Admin getAdmin() {
     return admin;
   }
+
+  //===============new===================
+  @Override
+  public void addAreas(ArrayList<String> area) {
+    areas.addAll(area);
+  }
+
+  @Override
+  public ArrayList<String> getAreas() {
+    return areas;
+  }
+
 }
