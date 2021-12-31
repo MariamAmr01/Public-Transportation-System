@@ -139,11 +139,13 @@ public class Main {
     System.out.println("Logged in as Admin: ");
     String in;
     do{
+      // To list the events of the first ride (except EndRide (Arrive to destination))
+      System.out.println(a.listRideEvents(1));
+      ///////////////////////////////////////////////
       System.out.println("Choose one of the following: ");
       System.out.println("1- List Pending Drivers"+"\n2- Suspend Account"+"\n3- Logout");
       in = input.next();
       if(in.equals("1")) {
-
         a.listPendingDrivers();
         Driver pDriver;
         if (SystemApp.getObj().getDataBase().getPendingDriverList().size() > 0) {

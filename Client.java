@@ -7,7 +7,6 @@ import java.util.Date;
 
 public class Client extends User implements Account {
   private Ride ride;
-  //============= New ==========
   private Date birthday;
   private int requiredSeats;
   private int accAdditionalPass;
@@ -82,7 +81,6 @@ public class Client extends User implements Account {
              createRide = false;
              this.ride = driver.getRide();
              this.ride.addClient(this);
-             //System.out.println("1)===============================================");
              SystemApp.getObj().notifyDriver(driver);
            }
          }
@@ -94,17 +92,14 @@ public class Client extends User implements Account {
        }
        for (Driver driver : drivers) {
          if(createRide && driver.getRide().getCompleted()){
-          //System.out.println("D: " + driver + "\nR: " + driver.getRide() + "\nC: " + driver.getRide().getCompleted());
-          //System.out.println("2)===============================================");
           SystemApp.getObj().notifyDriver(driver);
          }
-         //SystemApp.getObj().notifyDriver(driver);
        }
 
      }
 
   }
-/// ================== New ============================
+
   // Ride begin 
   public void acceptOffer(int offerIndex){
     ArrayList<Offer> offers = new ArrayList<>();
@@ -133,7 +128,6 @@ public class Client extends User implements Account {
 
     this.ride.setDriver(d);
     d.setRide(this.ride);
-    //d.getRide().setDriver(d);
     d.arriveToLocation(time);
   }
 
@@ -160,17 +154,16 @@ public class Client extends User implements Account {
 
     return ride;
   }
-  @Override
-  public String toString(){
-
-    return "Client: " + userName + "\nMobile Phone: " + mobilePhone+"\n";
-  }
-
   public Date getBirthday(){
     return birthday;
   }
 
   public int getAccAdditionalSeats(){
     return accAdditionalPass;
+  }
+
+  @Override
+  public String toString(){
+    return "Client: " + userName + "\nMobile Phone: " + mobilePhone+"\n";
   }
 }

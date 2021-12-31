@@ -24,7 +24,6 @@ public class SystemApp {
     driver.averageRate = sum / size;
   }
 
-  /// ============= New ==================
   public ArrayList<Driver> findDriver(String source, int nRequired) {
 
     ArrayList<Driver> drivers = new ArrayList<>();
