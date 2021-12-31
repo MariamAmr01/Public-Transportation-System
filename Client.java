@@ -133,19 +133,19 @@ public class Client extends User implements Account {
     d.arriveToLocation(time);
 
     
-    //try {
-      //IDiscount plainPrice = new AdminAreaDiscount(new BirthdayDiscount(new TwoPassengersDiscount(new PublicHolidayDiscount(new FirstRideDiscount(new PlainPrice())))));
-      IDiscount plainPrice = new BirthdayDiscount(new PlainPrice());
+    try {
+      IDiscount plainPrice = new AdminAreaDiscount(new BirthdayDiscount(new TwoPassengersDiscount(new PublicHolidayDiscount(new FirstRideDiscount(new PlainPrice())))));
+      //IDiscount plainPrice = new BirthdayDiscount(new PlainPrice());
       double discountedPrice = plainPrice.applyDiscount(offers.get(offerIndex-1).getPrice(), this.ride);
       System.out.println("Discounted Price " + discountedPrice);
       System.out.println("plain price " + offers.get(offerIndex-1).getPrice());
 
       if(discountedPrice != offers.get(offerIndex-1).getPrice())
           System.out.println(displayDiscount(discountedPrice));
-    //} 
-    /*catch (ParseException e) {
+    } 
+    catch (ParseException e) {
       e.printStackTrace();
-    }*/
+    }
   }
 
   public String displayDiscount(double discountedPrice)

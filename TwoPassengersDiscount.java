@@ -1,5 +1,5 @@
 public class TwoPassengersDiscount extends DiscountDecorator{
-    private static double ratio = 5/100;
+    private static final double ratio = 0.05;
 
     public TwoPassengersDiscount(IDiscount discount) {   //constructor
         super(discount);
