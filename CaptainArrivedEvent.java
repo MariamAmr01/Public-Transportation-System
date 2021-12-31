@@ -11,13 +11,18 @@ public class CaptainArrivedEvent extends IEvent{
     this.name = name;
     this.time = time;
   }
-  public String getEventInfo(){
-
+  
+  @Override
+  public String toString(){
     String names = "";
     for (Client c : clients) {
       names += " Client Name: " + c.getUserName() + "\n";
     }
 
     return "Event Name: " + name + " Event Time: " + time + " Driver Name: " + driver.getUserName() + names;
+  }
+
+  public String getEventInfo(){
+    return toString();
   }
 }

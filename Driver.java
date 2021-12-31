@@ -6,8 +6,7 @@ public class Driver extends User implements Account {
   private String drivingLicense;
   private String nationalId;
   public double averageRate;
-  // ================ New ====================
-  private boolean available;
+  //private boolean available;
   private Ride ride;
   private int numOfSeats;
   private int availableSeat;
@@ -15,13 +14,14 @@ public class Driver extends User implements Account {
   public ArrayList<Integer> rate;
 
   public Driver() {
-    available = true;
+    //available = true;
     favoriteAreas = new ArrayList<String>();
 
     rate = new ArrayList<Integer>();
   }
 
-  // 1) userName 2)password 3) moblie 4) drivingLicense 5) nationalId 6) numOfSeats
+  // 1) userName 2)password 3) moblie 4) drivingLicense 5) nationalId 6)
+  // numOfSeats
   public Boolean register(ArrayList<String> info) {
     this.userName = info.get(0);
     this.password = info.get(1);
@@ -29,7 +29,7 @@ public class Driver extends User implements Account {
     this.drivingLicense = info.get(3);
     this.nationalId = info.get(4);
     this.numOfSeats = Integer.parseInt(info.get(5));
-    availableSeat=numOfSeats;
+    availableSeat = numOfSeats;
 
     for (int i = 0; i < SystemApp.getObj().getDataBase().getDrivers().size(); i++) {
       if (SystemApp.getObj().getDataBase().getDrivers().get(i).getUserName().equals(this.userName)) {
@@ -71,12 +71,18 @@ public class Driver extends User implements Account {
     ArrayList<Ride> foundRide = new ArrayList<>();
     for (Ride r : rides) {
       if (r.getDriver() == null && !r.getCompleted()) {
-//        System.out.println("==========");
+
         for (String favoriteArea : favoriteAreas) {
+
           if (favoriteArea.equals(r.getSource())) {
-//            System.out.println(favoriteArea);
-            foundRide.add(r);
+            if ((r.getClients().get(0).getAccAdditionalSeats() == 0 && this.ride == null) ||
+                (r.getClients().get(0).getAccAdditionalSeats() != 0 && this.ride != null) ||   
+                (r.getClients().get(0).getAccAdditionalSeats() != 0 && this.ride == null)  ) 
+            {
+              foundRide.add(r);
+            }
           }
+
         }
       }
     }
@@ -84,24 +90,22 @@ public class Driver extends User implements Account {
   }
 
   public void offerRidePrice(Ride ride, int price) {
-    // ride.setPrice(price);
     Offer offer = new Offer(price, this);
     ride.setOffer(offer, this);
-    IEvent event = new CaptianOfferEvent(ride, price, "Captain put a price to the ride", LocalDateTime.now());
+    IEvent event = new CaptianOfferEvent(this, price, "Captain put a price to the ride", LocalDateTime.now());
     ride.addEvent(event);
   }
 
-  // ========== New ==============
   // Driver arrived to destination
   public void endRide() {
-    available = true;
+    //available = true;
+    availableSeat = numOfSeats;
     // Captain arrived to user destination
     IEvent event = new CaptainArrivedEvent(ride, "Captain arrived to user destination", LocalDateTime.now());
     ride.addEvent(event);
     ride.setCompleted(true);
   }
 
-  // ============ New =====================
   public void arriveToLocation(LocalDateTime time) {
     time = time.plusMinutes(10);
     IEvent event = new CaptainArrivedEvent(this.ride, "Captain arrived to user location", time);
@@ -118,7 +122,7 @@ public class Driver extends User implements Account {
       for (Ride rRide : requestedRide) {
         for (int j = 0; j < rRide.getOffers().size(); j++) {
           if (rRide.getOffers().get(j).getDriver().equals(this)) {
-            ride = rRide +"\n========================\nNew Client is added !!!!\n";
+            ride = rRide + "\n========================\nNew Client is added !!!!\n";
             return ride;
           }
         }
@@ -138,9 +142,9 @@ public class Driver extends User implements Account {
     ride = r;
   }
 
-  public void setAvailable(boolean av) {
-    available = av;
-  }
+  // public void setAvailable(boolean av) {
+  //   available = av;
+  // }
 
   public void setDrivingLicense(String drivingLicense) {
     this.drivingLicense = drivingLicense;
@@ -152,8 +156,8 @@ public class Driver extends User implements Account {
 
   public boolean getAvailable() {
 
-    System.out.println("Available seats: "+availableSeat);
-    return availableSeat>0;
+    System.out.println("Available seats: " + availableSeat);
+    return availableSeat > 0;
 
   }
 

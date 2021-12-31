@@ -4,15 +4,17 @@ public class CaptianOfferEvent extends IEvent {
   private Driver driver;
   private int price;
 
-  public CaptianOfferEvent(Ride ride,int price,String name, LocalDateTime time){
-    this.driver = ride.getDriver();
+  public CaptianOfferEvent(Driver driver,int price,String name, LocalDateTime time){
+    this.driver = driver;
     this.price = price;
     this.name = name;
     this.time = time;
   }
-
+  @Override
+  public String toString(){
+    return "Event Name: " + name + " Event Time: " + time + " Driver Name: " + driver.getUserName() + " Price: " + price + " \n";
+  }
  public String getEventInfo(){
-   return "Event Name: " + name + " Event Time: " + time + " Driver Name: " + driver.getUserName() + " Price: " + price + " \n";
-
+  return toString();
  }
 }

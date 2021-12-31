@@ -7,7 +7,6 @@ import java.util.Date;
 
 public class Client extends User implements Account {
   private Ride ride;
-  //============= New ==========
   private Date birthday;
   private int requiredSeats;
   private int accAdditionalPass;
@@ -76,10 +75,14 @@ public class Client extends User implements Account {
      else
      {
        for (Driver driver : drivers) {
-         if(driver.getRide()!=null&&!driver.getRide().getCompleted() && driver.getRide().getSource().equals(source)){
-           createRide = false;
-           this.ride = driver.getRide();
-           this.ride.addClient(this);
+         if(driver.getRide()!=null && !driver.getRide().getCompleted())
+         {
+           if(driver.getRide().getSource().equals(source) && accAdditionalPass!=0) {
+             createRide = false;
+             this.ride = driver.getRide();
+             this.ride.addClient(this);
+             SystemApp.getObj().notifyDriver(driver);
+           }
          }
        }
        if(createRide){
@@ -88,13 +91,15 @@ public class Client extends User implements Account {
         SystemApp.getObj().getDataBase().addRide(this.ride);
        }
        for (Driver driver : drivers) {
-         SystemApp.getObj().notifyDriver(driver);
+         if(createRide && driver.getRide().getCompleted()){
+          SystemApp.getObj().notifyDriver(driver);
+         }
        }
 
      }
 
   }
-/// ================== New ============================
+
   // Ride begin 
   public void acceptOffer(int offerIndex){
     ArrayList<Offer> offers = new ArrayList<>();
@@ -112,7 +117,6 @@ public class Client extends User implements Account {
 
     if(accAdditionalPass==0)
     {
-     System.out.println("/////////////////////////////");
       d.setAvailableSeat(0);
     }
 
@@ -122,9 +126,8 @@ public class Client extends User implements Account {
       d.setAvailableSeat(remainingSeat);
     }
 
-    d.setRide(this.ride);
     this.ride.setDriver(d);
-
+    d.setRide(this.ride);
     d.arriveToLocation(time);
   }
 
@@ -133,7 +136,7 @@ public class Client extends User implements Account {
    ArrayList<Offer> offers = new ArrayList<>();
 
    if(ride!= null ) {
-    if (this.ride.getOffers().size() != 0)
+    if (this.ride.getOffers().size() > 0)
     {
       for (Offer of : this.ride.getOffers()) {
         if (this.ride.getDriver() == null || this.ride.getDriver().getRide().getCompleted()){
@@ -151,13 +154,16 @@ public class Client extends User implements Account {
 
     return ride;
   }
-  @Override
-  public String toString(){
-
-    return "Client: " + userName + "\nMobile Phone: " + mobilePhone+"\n";
-  }
-
   public Date getBirthday(){
     return birthday;
+  }
+
+  public int getAccAdditionalSeats(){
+    return accAdditionalPass;
+  }
+
+  @Override
+  public String toString(){
+    return "Client: " + userName + "\nMobile Phone: " + mobilePhone+"\n";
   }
 }

@@ -3,9 +3,7 @@ import java.util.ArrayList;
 public class Ride implements IRide {
   private String source;
   private String destination;
-  //////
-  // private Client client;
-  /// =============== New ================
+
   private ArrayList<Client> clients = new ArrayList<>();
   private ArrayList<Offer> offers = new ArrayList<>();
   private ArrayList<IEvent> events = new ArrayList<>();
@@ -24,11 +22,11 @@ public class Ride implements IRide {
     completed = false;
   }
 
-  // ============= NEW =================
+
   public void addEvent(IEvent e) {
     events.add(e);
   }
-  // ============= NEW =================
+
   public void addClient(Client c) {
     clients.add(c);
   }
@@ -46,6 +44,9 @@ public class Ride implements IRide {
 
   public ArrayList<Client> getClients() {
     return clients;
+  }
+  public ArrayList<IEvent> getEvents() {
+    return events;
   }
 
   public void setRated(Boolean r) {
