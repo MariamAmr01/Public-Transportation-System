@@ -81,6 +81,10 @@ public class Client extends User implements Account {
              createRide = false;
              this.ride = driver.getRide();
              this.ride.addClient(this);
+
+             int remainingSeat = driver.getAvailableSeat() - passengers;
+             driver.setAvailableSeat(remainingSeat);
+
              SystemApp.getObj().notifyDriver(driver);
            }
          }
@@ -122,8 +126,7 @@ public class Client extends User implements Account {
 
     else
     {
-      int remainingSeat = d.getAvailableSeat() - requiredSeats;
-      d.setAvailableSeat(remainingSeat);
+      d.setAvailableSeat(accAdditionalPass);
     }
 
     this.ride.setDriver(d);
