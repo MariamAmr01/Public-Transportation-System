@@ -91,7 +91,7 @@ public class Client extends User implements Account {
         SystemApp.getObj().getDataBase().addRide(this.ride);
        }
        for (Driver driver : drivers) {
-         if(createRide && driver.getRide().getCompleted()){
+         if(createRide && (driver.getRide()==null||driver.getRide().getCompleted())){ //n
           SystemApp.getObj().notifyDriver(driver);
          }
        }
