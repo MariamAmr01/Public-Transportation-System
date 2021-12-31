@@ -13,11 +13,6 @@ public class DiscountDecorator implements IDiscount {
     }
 
     public double calculateDiscount(double ratio, double originalPrice){
-// Updated
-       System.out.println("Ratio: " + ratio );
-       System.out.println("originalPrice: " + originalPrice );
-
-       System.out.println("Dis :  " + (originalPrice - (ratio * originalPrice)));
 
        return (originalPrice - (ratio * originalPrice));
     }

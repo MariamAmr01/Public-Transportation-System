@@ -19,7 +19,6 @@ public class BirthdayDiscount extends DiscountDecorator {
         {
             return calculateDiscount(ratio, plainPrice);
         }
-        System.out.println("plainPrice:  " + plainPrice);
         return plainPrice;
     }
 }
