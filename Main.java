@@ -141,6 +141,11 @@ public class Main {
     do{
       // To list the events of the first ride (except EndRide (Arrive to destination))
       System.out.println(a.listRideEvents(1));
+      ArrayList<String> ar = new ArrayList<>();
+      ar.add("a");
+      ar.add("m");
+      ar.add("n");
+      a.addArea(ar);
       ///////////////////////////////////////////////
       System.out.println("Choose one of the following: ");
       System.out.println("1- List Pending Drivers"+"\n2- Suspend Account"+"\n3- Logout");

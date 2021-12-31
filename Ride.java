@@ -65,6 +65,10 @@ public class Ride implements IRide {
     return source;
   }
 
+  public String getDestination() {
+    return destination;
+  }
+
   public ArrayList<Offer> getOffers() {
     return offers;
   }
