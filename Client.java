@@ -139,7 +139,7 @@ public class Client extends User implements Account {
     if (this.ride.getOffers().size() > 0)
     {
       for (Offer of : this.ride.getOffers()) {
-        if (this.ride.getDriver() == null || this.ride.getDriver().getRide().getCompleted()){
+        if (this.ride.getDriver() == null &&(of.getDriver().getRide()==null||of.getDriver().getRide().getCompleted()) ){
           offers.add(of);
         }
       }
