@@ -156,7 +156,6 @@ public class Driver extends User implements Account {
 
   public boolean getAvailable() {
 
-    System.out.println("Available seats: " + availableSeat);
     return availableSeat > 0;
 
   }
