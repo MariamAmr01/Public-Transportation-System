@@ -9,6 +9,7 @@ public class Client extends User implements Account {
   private LocalDate birthday;
   private int requiredSeats;
   private int accAdditionalPass;
+ private double discountedPrice;
 
   public User logIn(String name, String pass){
     Client c;
@@ -85,6 +86,26 @@ public class Client extends User implements Account {
              driver.setAvailableSeat(remainingSeat);
 
              SystemApp.getObj().notifyDriver(driver);
+             try {
+               IDiscount plainPrice = new AdminAreaDiscount(new BirthdayDiscount(new TwoPassengersDiscount(new PublicHolidayDiscount(new FirstRideDiscount(new PlainPrice())))));
+               Offer of = null;
+               for (int i=0; i<this.ride.getOffers().size();i++)
+               {
+                 if(this.ride.getOffers().get(i).getDriver().equals(driver))
+                 {
+                   of=this.ride.getOffers().get(i);
+                 }
+               }
+
+               discountedPrice = plainPrice.applyDiscount(of.getPrice(), this.ride);
+
+               if(discountedPrice != of.getPrice())
+                 System.out.println(displayDiscount());
+               else System.out.println(of.getPrice());
+
+             } catch (ParseException e) {
+               e.printStackTrace();
+             }
            }
          }
        }
@@ -133,24 +154,21 @@ public class Client extends User implements Account {
     d.arriveToLocation(time);
 
     
-    //try {
-      //IDiscount plainPrice = new AdminAreaDiscount(new BirthdayDiscount(new TwoPassengersDiscount(new PublicHolidayDiscount(new FirstRideDiscount(new PlainPrice())))));
-      IDiscount plainPrice = new BirthdayDiscount(new PlainPrice());
-      double discountedPrice = plainPrice.applyDiscount(offers.get(offerIndex-1).getPrice(), this.ride);
-      System.out.println("Discounted Price " + discountedPrice);
-      System.out.println("plain price " + offers.get(offerIndex-1).getPrice());
+    try {
+      IDiscount plainPrice = new AdminAreaDiscount(new BirthdayDiscount(new TwoPassengersDiscount(new PublicHolidayDiscount(new FirstRideDiscount(new PlainPrice())))));
+      discountedPrice = plainPrice.applyDiscount(offers.get(offerIndex-1).getPrice(), this.ride);
 
       if(discountedPrice != offers.get(offerIndex-1).getPrice())
-          System.out.println(displayDiscount(discountedPrice));
-    //} 
-    /*catch (ParseException e) {
+          System.out.println(displayDiscount());
+    } 
+    catch (ParseException e) {
       e.printStackTrace();
-    }*/
+    }
   }
 
-  public String displayDiscount(double discountedPrice)
+  public String displayDiscount()
   {
-    return "price after discount: " + Double.toString(discountedPrice);
+    return "price after discount: " + discountedPrice;
   }
   
   public String getNotification() {

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class AdminAreaDiscount extends DiscountDecorator {
-    private static double ratio = 10/100;
+    private static final double ratio = 0.1;
 
     public AdminAreaDiscount(IDiscount discount) {   //constructor
         super(discount);

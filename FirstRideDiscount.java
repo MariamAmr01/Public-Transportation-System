@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 
 public class FirstRideDiscount extends DiscountDecorator {
-    private static double ratio = 10/100;
+
+    private static final double ratio = 0.1;
 
     public FirstRideDiscount(IDiscount discount) {   //constructor
         super(discount);
@@ -10,6 +11,8 @@ public class FirstRideDiscount extends DiscountDecorator {
     @Override
     public double applyDiscount(double originalPrice, Ride ride) {
         double plainPrice = super.applyDiscount(originalPrice, ride);
+
+
         ArrayList<Ride> rides = SystemApp.getObj().getDataBase().getRides();
         int found = 0;
         int lastIndex = ride.getClients().size()-1;

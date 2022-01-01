@@ -7,9 +7,11 @@ public class Main {
     System.out.println(c.getNotification());
     if(!c.getNotification().equals("no offers")) //&& !c.getRide().getRated()
     {
+      if(c.getRide()!=null&&c.getRide().getOffers().size()!=0) {
         System.out.println("Choose offer: ");
         int response = input.nextInt();
         c.acceptOffer(response);
+      }
 //      System.out.println("Do you want to rate the driver ☺ \n1- Rate. \n2- Remind me later.");
 //      int response = input.nextInt();
 //      if (response == 1) {
@@ -33,7 +35,12 @@ public class Main {
         System.out.println("3- Rate current ride driver");
         flag=true;
       }
-
+      if(c.getRide()!=null && c.getRide().getDriver()!=null)
+      {
+        //System.out.println("4- View Discounts");
+        //flag=true;
+        c.displayDiscount();
+      }
       in = input.next();
       if(in.equals("1")){
         System.out.print("Enter source : ");

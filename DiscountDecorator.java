@@ -8,12 +8,13 @@ public class DiscountDecorator implements IDiscount {
 
     @Override
     public double applyDiscount(double originalPrice, Ride ride) {
+
         return discount.applyDiscount(originalPrice, ride);    //return the plain price
     }
 
     public double calculateDiscount(double ratio, double originalPrice){
 
-       return (originalPrice = originalPrice - (ratio * originalPrice));
+       return (originalPrice - (ratio * originalPrice));
     }
     
 }
