@@ -47,7 +47,7 @@ public class Admin extends User {
   }
 
   //================new======================
-  public void addArea(ArrayList<String> area) {
+  public void addAreas(ArrayList<String> area) {
     SystemApp.getObj().getDataBase().addAreas(area);
   }
 }

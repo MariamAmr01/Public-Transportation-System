@@ -152,7 +152,7 @@ public class Main {
       ar.add("a");
       ar.add("m");
       ar.add("n");
-      a.addArea(ar);
+      a.addAreas(ar);
       ///////////////////////////////////////////////
       System.out.println("Choose one of the following: ");
       System.out.println("1- List Pending Drivers"+"\n2- Suspend Account"+"\n3- Logout");
