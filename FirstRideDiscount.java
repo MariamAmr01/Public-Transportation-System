@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class FirstRideDiscount extends DiscountDecorator {
 
-    private static final double ratio = 0.1;
+    private double ratio = 0.1;
 
     public FirstRideDiscount(IDiscount discount) {   //constructor
         super(discount);

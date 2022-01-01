@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class PublicHolidayDiscount extends DiscountDecorator {
-    private static final double ratio = 0.05;
+    private double ratio = 0.05;
     
     ArrayList<LocalDate> specialDays = new ArrayList<LocalDate>();
     

@@ -1,5 +1,5 @@
 public class BirthdayDiscount extends DiscountDecorator {
-    private static final double ratio = 0.1;
+    private double ratio = 0.1;
 
     public BirthdayDiscount(IDiscount discount) {   //constructor
         super(discount);
